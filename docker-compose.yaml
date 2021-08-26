@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  nginx:
+    image: "localhost:5000/nginx"
+    volumes:
+      - ./www:/var/www/html/
+    ports:
+      - "8080:8080"
+    networks:
+      - A  
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+  apache2:
+    image: "localhost:5000/apache2"
+    volumes:
+      - ./www:/var/www/localhost/htdocs
+    ports: 
+      - "8081:8081"
+    networks:
+      - B
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
+networks:
+    A:
+        driver: bridge
+        ipam:
+            driver: default
+    B:
+        driver: bridge
+        ipam:
+            driver: default
